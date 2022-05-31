@@ -3,11 +3,11 @@ import styled from "styled-components"
 import Options from './Options'
 import Stats from './Stats'
 
-const Header = () => {
+const Header = ({ restart, setRestart }) => {
   return (
     <HeaderContainer>
         <Stats />
-        <Options />
+        <Options restart={restart} setRestart={setRestart} />
     </HeaderContainer>
   )
 }
@@ -15,6 +15,7 @@ const Header = () => {
 const HeaderContainer = styled.section`
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
 `
 
 export default Header

@@ -11,9 +11,9 @@ function App() {
 }
 
 const AppContainer = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 30px;
+  width: auto;
+  height: 100vh;
+  padding: 0px;
   background-color: #faf8ef;
 `
 

@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Tile from './Tile'
 
-const Board = () => {
+const Board = ({ restart }) => {
     const values = {1: [1, 2, 3, 4], 2: [1, 2, 3, 4], 3: [1, 2, 3, 4], 4: [1, 2, 3, 4]}
-    const [tiles, setTiles] = useState({0: {1: 2, 2: 4, 3: 8}})
+    const [tiles, setTiles] = useState({1: {1: 2, 2: 4, 3: 8}})
+    useEffect(() => {
+      setTiles({1: {1: 2, 2: 4}, 2: {3: 16}})
+    }, [restart])
+    
     return (
         <GameBoardContainer>
-            {Object.values(values).map((row) => {
-                return row.map((cell) => {
-                    return (<section className='cell' style={{
-                    }}></section>)
-                })
-            })}
+            {[...Array(4**2)].map((e, i) => {
+                    return (<section key={i} className='cell'></section>)
+                })}
             {Object.keys(tiles).map((row) => {
                 return Object.keys(tiles[row]).map((column) => {
-                    return <Tile value={tiles[row][column]} 
-                    gridRow = {`${parseInt(row) + 1} / ${parseInt(row) + 2}`} 
-                    gridColumn = {`${parseInt(column) + 1}  / ${parseInt(column) + 2}`} />
+                    return <Tile key={`${row}, ${column}`} value={tiles[row][column]} 
+                    gridRow = {`${parseInt(row) } / ${parseInt(row) + 1}`} 
+                    gridColumn = {`${parseInt(column)}  / ${parseInt(column) + 1}`} />
                 })
             })}
         </GameBoardContainer>

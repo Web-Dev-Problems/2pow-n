@@ -1,11 +1,20 @@
 import React from "react";
+import styled from "styled-components"
+import Game from "./components/Game";
 
 function App() {
   return (
-    <div className="App">
-      2048
-    </div>
+    <AppContainer className="App">
+      <Game />
+    </AppContainer>
   );
 }
+
+const AppContainer = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 30px;
+  background-color: #faf8ef;
+`
 
 export default App;

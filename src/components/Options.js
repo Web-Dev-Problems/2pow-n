@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from "styled-components"
 
-const Options = () => {
+const Options = ({ restart, setRestart }) => {
   return (
     <OptionsContainer>
         <p className='desc'>Join the tiles, get to <strong>2048!</strong></p>
-        <button className='restart'>New Game</button>
+        <button className='restart' onClick={() => {setRestart(!restart)}}>New Game</button>
     </OptionsContainer>
   )
 }

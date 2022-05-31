@@ -2,13 +2,70 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Tile from './Tile'
 
-const Board = ({ restart }) => {
-    const values = {1: [1, 2, 3, 4], 2: [1, 2, 3, 4], 3: [1, 2, 3, 4], 4: [1, 2, 3, 4]}
-    const [tiles, setTiles] = useState({1: {1: 2, 2: 4, 3: 8}})
+const Board = ({ restart, setRestart }) => {
+    const [tiles, setTiles] = useState(JSON.parse(localStorage.getItem("data")))
     useEffect(() => {
-      setTiles({1: {1: 2, 2: 4}, 2: {3: 16}})
+        if (restart) {
+            localStorage.setItem("data", JSON.stringify({1: {1: 2, 2: 4}, 2: {1: 16, 3: 16}}))
+            console.log(JSON.parse(localStorage.getItem("data")))
+            setTiles(JSON.parse(localStorage.getItem("data")))   
+            setRestart(false)
+        }
     }, [restart])
     
+    const handleKeyDown = (event) => {
+        var newTiles = tiles
+        event.preventDefault()
+        switch (event.key) {
+            case 'ArrowLeft':
+                Object.keys(newTiles).map((row) => {
+                    Object.keys(newTiles[row]).map((col) => {
+                        var newCol = parseInt(col)
+                        while (!Object.keys(newTiles[row]).includes(`${newCol - 1}`) && newCol !== 1) {
+                            newCol = newCol - 1
+                        }
+                        var multip = 1
+                        if (newCol !== 1) {
+                            if (newTiles[row][newCol - 1] == newTiles[row][col]) {
+                                multip = 2
+                            }
+                        }
+                        var {[col]: _, ...newRow} = newTiles[row]
+                        newTiles[row] = {...newRow, [multip > 1 ? newCol - 1  : newCol ]: (newTiles[row][col] * multip)}
+                    })
+                })
+                break;
+            case 'ArrowUp':
+                break;
+            case 'ArrowDown':
+                break;
+            case 'ArrowRight':
+                Object.keys(newTiles).map((row) => {
+                    Object.keys(newTiles[row]).map((col) => {
+                        var newCol = parseInt(col)
+                        while (!Object.keys(newTiles[row]).includes(`${newCol - 1}`) && newCol !== 1) {
+                            newCol = newCol - 1
+                        }
+                        var multip = 1
+                        if (newCol !== 1) {
+                            if (newTiles[row][newCol - 1] == newTiles[row][col]) {
+                                multip = 2
+                            }
+                        }
+                        var {[col]: _, ...newRow} = newTiles[row]
+                        newTiles[row] = {...newRow, [multip > 1 ? newCol - 1  : newCol ]: (newTiles[row][col] * multip)}
+                    })
+                })
+                break;
+            default:
+                console.log(event.key)
+        }
+        localStorage.setItem("data", JSON.stringify(newTiles))
+        return setTiles(JSON.parse(localStorage.getItem("data")))
+    }
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown)
+    }, [])
     return (
         <GameBoardContainer>
             {[...Array(4**2)].map((e, i) => {
@@ -49,6 +106,7 @@ const GameBoardContainer = styled.section`
         font-weight: bold;
         font-size: 55px;
         z-index: 10;
+        /* position: absolute; */
     }
     p {
         grid-column: 1 / 2;

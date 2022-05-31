@@ -8,7 +8,7 @@ const Game = () => {
   return (
     <GameContainer>
         <Header restart={restart} setRestart={setRestart} />
-        <Board restart={restart} />
+        <Board restart={restart} setRestart={setRestart} />
     </GameContainer>
   )
 }

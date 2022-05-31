@@ -1,2 +1,9 @@
+* {
+    margin: 0;
+    font-family: clear;
+}
 
-
+@font-face {
+    font-family: clear;
+    src: url("fonts/ClearSans-Regular.ttf");
+}
